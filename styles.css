@@ -8,3 +8,7 @@
 .forms button {
   display: block;
 }
+
+.forms textarea {
+  resize: none;
+}

@@ -5,8 +5,12 @@
   "that": "dat",
   "this": "dis",
   "fuck": "furk",
+  "fuckery": "furkery",
   "brother": "brofur",
+  "brothers": "brofurs",
   "sister": "sisfur",
+  "sisters": "sisfurs",
+  "parent": "pawrent",
   "parents": "pawrents",
   "paws": "stumps",
   "with": "wid",
@@ -16,5 +20,8 @@
   "teeth": "teef",
   "think": "tink",
   "you": "u",
-  "its": "is"
+  "need": "ned",
+  "to": "2",
+  "its": "is",
+  "human": "hooman"
 }
