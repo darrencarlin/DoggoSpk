@@ -25,6 +25,10 @@ const words = {
   need: "ned",
   to: "2",
   its: "is",
+  my: "my",
+  me:"ma",
+  i: "i",
+  you:"you",
   human: "hooman"
 };
 
