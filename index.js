@@ -29,8 +29,14 @@ const words = {
   me:"ma",
   i: "i",
   love: "love",
-  you:"u",
-  human: "hooman"
+  you:"yew",
+  friend: "fren",
+  friends: "frens",
+  fret: "fret",
+  doing: "doin",
+  human: "hooman",
+  a: "a",
+  for:"fur",
 };
 
 const submitBtn = document.getElementById("submit");
