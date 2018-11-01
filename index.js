@@ -28,7 +28,8 @@ const words = {
   my: "my",
   me:"ma",
   i: "i",
-  you:"you",
+  love: "love",
+  you:"u",
   human: "hooman"
 };
 
