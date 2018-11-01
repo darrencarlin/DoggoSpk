@@ -81,3 +81,4 @@ clearBtn.addEventListener("click", event => {
 });
 
 // Allowed words (words that dont have a translation)
+// If word isnt found, return that word itself
