@@ -1,6 +1,5 @@
 const words = {
   help: "halp",
-  me: "me",
   attention: "attenchon",
   stop: "staph",
   that: "dat",
@@ -15,6 +14,7 @@ const words = {
   parent: "pawrent",
   parents: "pawrents",
   paws: "stumps",
+  dog: "doggo",
   with: "wid",
   please: "peez",
   look: "lewk",
@@ -25,26 +25,76 @@ const words = {
   need: "ned",
   to: "2",
   its: "is",
-  my: "my",
-  me:"ma",
-  i: "i",
-  love: "love",
-  you:"yew",
+  me: "ma",
+  you: "yew",
   friend: "fren",
   friends: "frens",
   fret: "fret",
   doing: "doin",
   human: "hooman",
-  a: "a",
-  for:"fur",
+  for: "fur"
 };
 
+const inputForm = document.getElementById("inputform");
+const outputForm = document.getElementById("outputform");
 const submitBtn = document.getElementById("submit");
-const textArea = document.getElementById("textarea");
 const clearBtn = document.getElementById("clear");
 const hashtagBtn = document.getElementById("convertToHash");
+const wordsList = document.getElementById("wordlist");
 
-textArea.addEventListener("keydown", event => {
+// TODO
+
+// regex to remove funny characters such as !?#$%^&*^ only allow letters a-z
+
+// Add firebase to project to store words
+
+const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
+
+let wordsArr = [];
+const wordsRef = db.collection("words");
+
+function getWords() {
+  wordsRef.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      for (key in data) {
+        if (data.hasOwnProperty(key)) {
+          let value = data[key];
+          wordsArr.push(value);
+        }
+      }
+    });
+    displayWords(wordsArr);
+  });
+}
+
+getWords();
+
+function displayWords(arr) {
+  Array.from(arr).forEach(word => {
+    wordsList.innerHTML += `<li>${word}</li>`;
+  });
+}
+
+function addData(arr) {
+  arr = arr.filter(val => !wordsArr.includes(val));
+  arr.forEach(word => {
+    wordsRef
+      .add({
+        word: word
+      })
+      .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
+  });
+  getWords();
+}
+
+inputForm.addEventListener("keydown", event => {
   if (event.keyCode === 13) {
     convertText(event);
   }
@@ -55,40 +105,47 @@ submitBtn.addEventListener("click", event => {
 });
 
 hashtagBtn.addEventListener("click", event => {
-  convertHashtag(event);
+  createHashtags(event);
 });
 
+// used to store hashtags
 let hashtagArr = [];
-
-function convertHashtag(event) {
-  event.preventDefault();
-  document.getElementById("outputform").innerHTML = "";
-  hashtagArr.forEach(element => {
-    document.getElementById("outputform").innerHTML += `#${element}`;
-  });
-}
+// words that don't currently have a translation are stored here
+let noTranslationArr = [];
 
 function convertText(event) {
   event.preventDefault();
+  let text = inputForm.value.toLowerCase().trim();
+  let array = text.split(/,?\s+/);
 
-  let text = document.getElementById("textarea").value.toLowerCase();
-  let arr = text.split(/,?\s+/);
-
-  arr.forEach(element => {
-    let output = words[element];
+  array.forEach(word => {
+    let output = words[word];
+    // if the word doesn't have a translation, return the word else return the translation
     if (output === undefined) {
-      document.getElementById("outputform").innerHTML += "Word Not Found";
+      outputForm.innerHTML += `${word} `;
+      noTranslationArr.push(word);
     } else {
-      document.getElementById("outputform").innerHTML += `${output} `;
+      outputForm.innerHTML += `${output} `;
       hashtagArr.push(output);
     }
+  });
+  addData(noTranslationArr);
+}
+
+function createHashtags(event) {
+  event.preventDefault();
+  outputForm.innerHTML = "";
+  hashtagArr.forEach(word => {
+    outputForm.innerHTML += `#${word}`;
   });
 }
 
 clearBtn.addEventListener("click", event => {
   event.preventDefault();
-  document.getElementById("textarea").innerHTML = "";
-  document.getElementById("outputform").innerHTML = "";
+  inputForm.value = "";
+  outputForm.innerText = "";
+  hashtagArr = [];
+  noTranslationArr = [];
 });
 
 // Allowed words (words that dont have a translation)
