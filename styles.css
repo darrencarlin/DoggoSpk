@@ -13,3 +13,12 @@
 .forms textarea {
   resize: none;
 }
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul li {
+  padding: 10px;
+}

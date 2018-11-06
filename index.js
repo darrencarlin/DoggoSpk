@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     thats: "dats",
     this: "dis",
     fuck: "furk",
+    some: "sum",
     fuckery: "furkery",
     brother: "brofur",
     brothers: "brofurs",
@@ -36,7 +37,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     doing: "doin",
     human: "hooman",
     for: "fur",
-    loves: "ruffs"
+    loves: "ruffs",
+    hi: "hai",
+    walk: "walkies",
+    train: "tren",
+    cheese: "chez",
+    afraid: "fraid"
   };
 
   const inputForm = document.getElementById("inputform");
@@ -88,7 +94,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   function displayWords(arr) {
     wordList.innerHTML = "";
     Array.from(arr).forEach(word => {
-      wordList.innerHTML += `<li id="${word.id}" >${word.name}</li>`;
+      wordList.innerHTML += `<li class="word" id="${word.id}" >${
+        word.name
+      }</li>`;
     });
   }
 
@@ -171,6 +179,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
     hashtagArr.forEach(word => {
       outputForm.innerHTML += `#${word}`;
     });
+  }
+
+  // Add word to input
+
+  document.body.addEventListener("click", event => {
+    if (event.srcElement.className == "word") {
+      addToInput(event);
+    }
+  });
+
+  function addToInput(event) {
+    document.querySelector("#addForm input:first-of-type").value =
+      event.target.innerText;
+    console.log(event.target.innerText);
   }
 
   // Event Handlers
