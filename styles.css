@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Mali");
+
+body {
+  font-family: "Mali", cursive;
+  background-image: url("https://i.pinimg.com/236x/84/b1/6c/84b16c24cb8f7e8ff94518b499d970b9.jpg");
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-color: #73c8c7;
+}
 .word {
   cursor: pointer;
 }
@@ -34,10 +43,6 @@ ul {
 }
 li {
   padding: 10px;
-}
-
-section:last-of-type .column:last-of-type {
-  border-bottom: 2px solid #000;
 }
 
 @media screen and (min-width: 640px) {
