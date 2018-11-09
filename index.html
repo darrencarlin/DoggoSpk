@@ -17,7 +17,7 @@
         <div class="columns">
             <div class="column">
                 <form id="inputForm">
-                    <h3>English</h3>
+                    <h3 class="subtitle">English:</h3>
                     <div class="field">
                         <textarea name="textarea" id="inputform" class="textarea" placeholder="e.g. Give me attention human please"
                             required></textarea>
@@ -30,11 +30,10 @@
                             <button class="button is-primary" id="clear">Clear</button>
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="column level">
-                <h3>Doggo</h3>
+                <h3 class="subtitle">Doggo:</h3>
                 <form id="outputForm">
                     <div class="field">
                         <textarea name="textarea" id="outputform" class="textarea" placeholder="e.g. gib me attenchon hooman peez"
@@ -52,23 +51,19 @@
         </div>
     </section>
     <section class="section">
-        <h3 class="title">Help build the library</h3>
+        <h2 class="title">Help build the library</h2>
         <div class="columns">
             <div class="column">
                 <form id="addForm">
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label for="english" class="label">English</label>
-                        </div>
+                    <div class="field">
+                     <h3 class="subtitle">English:</h3>
                         <input type="text" class="input" id="english" name="english" value="" placeholder="You word in English:" />
                     </div>
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label for="doggo" class="label">Doggo</label>
-                        </div>
+                    <div class="field ">
+                        <h3 class="subtitle">Doggo:</h3>
                         <input type="text" class="input" id="doggo" name="translation" value="" placeholder="Your doggo translation:" />
                     </div>
-                    <div class="field is-horizontal">
+                    <div class="field">
                         <div class="field-label">
                             <!-- Left empty for spacing -->
                         </div>
@@ -86,8 +81,8 @@
                 </form>
             </div>
             <div class="column">
-                <h3 class="title is-4">Words that have been searched but no translation currently exists: (click to
-                    translate)</h3>
+                <b>Words that have been searched but no translation currently exists: (click to
+                    translate)</b>
                 <ul id="wordlist"></ul>
             </div>
         </div>

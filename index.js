@@ -1,49 +1,51 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-  const words = {
-    help: "halp",
-    attention: "attenchon",
-    stop: "staph",
-    that: "dat",
-    thats: "dats",
-    this: "dis",
-    fuck: "furk",
-    some: "sum",
-    fuckery: "furkery",
-    brother: "brofur",
-    brothers: "brofurs",
-    sister: "sisfur",
-    sisters: "sisfurs",
-    parent: "pawrent",
-    parents: "pawrents",
-    paws: "stumps",
-    dog: "doggo",
-    more: "moar",
-    with: "wid",
-    please: "peez",
-    scratches: "scritches",
-    look: "lewk",
-    give: "gib",
-    teeth: "teef",
-    think: "tink",
-    you: "u",
-    need: "ned",
-    to: "2",
-    its: "is",
-    me: "ma",
-    you: "yew",
-    friend: "fren",
-    friends: "frens",
-    fret: "fret",
-    doing: "doin",
-    human: "hooman",
-    for: "fur",
-    loves: "ruffs",
-    hi: "hai",
-    walk: "walkies",
-    train: "tren",
-    cheese: "chez",
-    afraid: "fraid"
+  const dictionary = {
+    help: ["halp"],
+    attention: ["attenchon"],
+    stop: ["staph"],
+    that: ["dat"],
+    thats: ["dats"],
+    this: ["dis"],
+    fuck: ["furk"],
+    some: ["sum"],
+    fuckery: ["furkery"],
+    brother: ["brofur"],
+    brothers: ["brofurs"],
+    sister: ["sisfur"],
+    sisters: ["sisfurs"],
+    parent: ["pawrent"],
+    parents: ["pawrents"],
+    paws: ["stumps"],
+    dog: ["doggo"],
+    more: ["moar"],
+    with: ["wid"],
+    please: ["peez"],
+    scratches: ["scritches"],
+    look: ["lewk"],
+    give: ["gib"],
+    teeth: ["teef"],
+    think: ["tink"],
+    you: ["u"],
+    need: ["ned"],
+    to: ["2"],
+    its: ["is"],
+    me: ["ma"],
+    friend: ["fren"],
+    friends: ["frens"],
+    fret: ["fret"],
+    doing: ["doin"],
+    human: ["hooman"],
+    for: ["fur"],
+    loves: ["ruffs"],
+    hi: ["hai"],
+    walk: ["walkies"],
+    train: ["tren"],
+    cheese: ["chez", "cheeezz"],
+    afraid: ["fraid", "fraaaid", "fraaaaiiiddddd"],
+    excuse: ["scuse"]
   };
+
+  let levelOfDerp = 2;
 
   const inputForm = document.getElementById("inputform");
   const outputForm = document.getElementById("outputform");
@@ -60,14 +62,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const db = firebase.firestore();
   db.settings({ timestampsInSnapshots: true });
   const wordsRef = db.collection("noTranslation");
+  const dictionaryRef = db.collection("dictionary");
   const userWords = db.collection("userWords");
 
-  // Get words
+  // Get Dictionary from Firestore
+
+  function getDictionary() {}
+
+  // Get words not yet translated from Firestore
 
   let wordsArr = [];
 
   function getWords() {
-    console.log("getting words");
     wordsArr = [];
     wordsRef.get().then(snapshot => {
       snapshot.forEach(doc => {
@@ -89,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
   getWords();
 
-  // Display words
+  // Display words not yet translated from getWords()
 
   function displayWords(arr) {
     wordList.innerHTML = "";
@@ -100,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
   }
 
-  // Add words to Firebase
+  // Add words to Firebase that have no translation after being searched
 
   function addData(arr) {
     arr = arr.filter(val => !entireWordsArr.includes(val));
@@ -118,6 +124,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
     getWords();
   }
+
+  // Add words to firebase that have been recommended by a user
 
   function addWordToDB(event) {
     event.preventDefault();
@@ -146,24 +154,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }, 3000);
   }
 
-  // Convert words to doggo
-
-  // used to store hashtags
+  // Used to store hashtags
   let hashtagArr = [];
-  // words that don't currently have a translation are stored here
+  // Words that don't currently have a translation are stored here
   let noTranslationArr = [];
+
+  // Convert words to doggo
 
   function convertText(event) {
     event.preventDefault();
     let text = inputForm.value.toLowerCase().trim();
     let array = text.split(/,?\s+/);
     array.forEach(word => {
-      let output = words[word];
-      // if the word doesn't have a translation return the word, else return the translation
-      if (output === undefined) {
+      // if the word doesn't have a translation return the original word, else return the translation
+      if (dictionary[word] === undefined) {
         outputForm.innerHTML += `${word} `;
         noTranslationArr.push(word);
       } else {
+        let output = dictionary[word][levelOfDerp];
+        if (output === undefined) {
+          output = dictionary[word][1];
+          if (output === undefined) {
+            output = dictionary[word][0];
+          }
+        }
         outputForm.innerHTML += `${output} `;
         hashtagArr.push(output);
       }
