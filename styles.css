@@ -12,9 +12,8 @@ body {
 }
 
 .word:hover {
-  text-decoration: underline;
-  font-weight: bold;
-  transition: all 0.3s ease;
+    background-color: #cccccc;
+    transition: all 0.3s ease;
 }
 
 .forms {
@@ -75,6 +74,10 @@ li {
     text-align: center;
   }
   ul li {
-    padding: 20px;
+    padding: 5px 10px;
+    border: 1px solid #969696;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #fff;
   }
 }
