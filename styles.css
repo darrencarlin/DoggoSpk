@@ -37,6 +37,14 @@ ul {
   flex-wrap: wrap;
 }
 
+ul li {
+    padding: 5px 10px;
+    border: 1px solid #969696;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
 .column {
   flex-direction: column;
 }
@@ -73,11 +81,5 @@ li {
   section h2 {
     text-align: center;
   }
-  ul li {
-    padding: 5px 10px;
-    border: 1px solid #969696;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-  }
+  
 }
