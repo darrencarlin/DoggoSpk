@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   const dictionary = {
+    what: ["wut"],
+    puppy: ["pupperino"],
+    fur: ["floof"],
     help: ["halp"],
+    hello: ["herro"],
+    lick: ["mlem"],
+    fat: ["thicc"],
+    snack: ["snacc"],
     attention: ["attenchon"],
     stop: ["staph"],
     that: ["dat"],
@@ -15,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sisters: ["sisfurs"],
     parent: ["pawrent"],
     parents: ["pawrents"],
-    paws: ["stumps"],
+    paws: ["stumps", "toe beans"],
     dog: ["doggo"],
     more: ["moar"],
     with: ["wid"],
@@ -34,15 +41,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
     friends: ["frens"],
     fret: ["fret"],
     doing: ["doin"],
+    bark: ["bork"],
     human: ["hooman"],
     for: ["fur"],
+    love: ["luv"],
+    very: ["heckin"],
+    food: ["noms"],
+    like: ["liek"],
+    nose: ["snoot"],
+    legs: ["nubs"],
+    run: ["zoom"],
+    running: ["zoomies"],
+    bird: ["birb"],
+    crazy: ["heckin"],
+    good: ["da bes"],
+    boy: ["boye"],
+    cat: ["catto"],
+    kitten: ["kitteh"],
+    dead: ["ded"],
+    small: ["smol"],
     loves: ["ruffs"],
     hi: ["hai"],
     walk: ["walkies"],
     train: ["tren"],
     cheese: ["chez", "cheeezz"],
     afraid: ["fraid", "fraaaid", "fraaaaiiiddddd"],
-    excuse: ["scuse"]
+    excuse: ["scuse"],
+    stupid: ["stoopid"],
+    protect: ["protec"],
+    there: ["ther"]
   };
 
   let levelOfDerp = 2;
@@ -54,7 +81,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const clearBtn = document.getElementById("clear");
   const hashtagBtn = document.getElementById("convertToHash");
   const wordList = document.getElementById("wordlist");
+  const wordCount = document.getElementById("wordCount");
 
+  const libraryCount = document.getElementById("libraryCount");
+  const libraryWordCount = Object.keys(dictionary).length;
+  libraryCount.innerHTML = libraryWordCount;
   let entireWordsArr = [];
 
   // Firebase
@@ -76,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   function getWords() {
     wordsArr = [];
     wordsRef.get().then(snapshot => {
+      wordCount.innerHTML = snapshot.size;
       snapshot.forEach(doc => {
         const data = doc.data();
         const id = doc.id;
@@ -90,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }
         }
       });
+
       displayWords(wordsArr);
     });
   }
@@ -110,7 +143,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   function addData(arr) {
     arr = arr.filter(val => !entireWordsArr.includes(val));
-    arr.forEach(word => {
+    var filtered = arr.filter(el => {
+      return el != null;
+    });
+    filtered.forEach(word => {
       wordsRef
         .add({
           word: word
@@ -206,7 +242,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   function addToInput(event) {
     document.querySelector("#addForm input:first-of-type").value =
       event.target.innerText;
-    console.log(event.target.innerText);
   }
 
   // Event Handlers
@@ -236,4 +271,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   addBtn.addEventListener("click", event => {
     addWordToDB(event);
   });
+
+  /*****************************************************************************
+   *                     Admin Page                                            *
+   * ***************************************************************************/
 });

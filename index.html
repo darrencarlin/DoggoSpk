@@ -14,10 +14,11 @@
 <body>
     <section class="forms section">
         <h1 class="title">Convert English to Doggo</h1>
+        <p><span id="libraryCount"></span>+ words so far</p>
         <div class="columns">
             <div class="column">
                 <form id="inputForm">
-                    <h3 class="subtitle">English:</h3>
+                    <h3 class="subtitle">English: </h3>
                     <div class="field">
                         <textarea name="textarea" id="inputform" class="textarea" placeholder="e.g. Give me attention human please"
                             required></textarea>
@@ -36,8 +37,7 @@
                 <h3 class="subtitle">Doggo:</h3>
                 <form id="outputForm">
                     <div class="field">
-                        <textarea name="textarea" id="outputform" class="textarea"
-                            required></textarea>
+                        <textarea name="textarea" id="outputform" class="textarea" required></textarea>
                     </div>
                     <div class="field">
                         <div class="control level-right">
@@ -56,12 +56,14 @@
             <div class="column">
                 <form id="addForm">
                     <div class="field">
-                     <h3 class="subtitle">English:</h3>
-                        <input type="text" class="input" id="english" name="english" value="" placeholder="You word in English:" />
+                        <h3 class="subtitle">English:</h3>
+                        <input type="text" class="input" id="english" name="english" value="" placeholder="You word in English:"
+                            required />
                     </div>
                     <div class="field ">
                         <h3 class="subtitle">Doggo:</h3>
-                        <input type="text" class="input" id="doggo" name="translation" value="" placeholder="Your doggo translation:" />
+                        <input type="text" class="input" id="doggo" name="translation" value="" placeholder="Your doggo translation:"
+                            required />
                     </div>
                     <div class="field">
                         <div class="field-label">
@@ -81,7 +83,8 @@
                 </form>
             </div>
             <div class="column">
-                <b>Words that have been searched but no translation currently exists: (click to
+                <b> <span id="wordCount"></span> Words that have been searched but no translation currently exists:
+                    (click to
                     translate)</b>
                 <ul id="wordlist"></ul>
             </div>
