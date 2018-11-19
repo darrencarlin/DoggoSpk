@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     there: ["ther"]
   };
 
-  let levelOfDerp = 2;
+  let levelOfDerp = 1;
 
   const inputForm = document.getElementById("inputform");
   const outputForm = document.getElementById("outputform");
