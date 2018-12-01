@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     hello: ["herro"],
     lick: ["mlem"],
     fat: ["thicc"],
+    treats: ["yum yums"],
+    hungry: ["hungo"],
     snack: ["snacc"],
     attention: ["attenchon"],
     stop: ["staph"],
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     human: ["hooman"],
     hungry: ["hungy"],
     for: ["fur"],
-    love: ["luv"],
+    love: ["luv","lub"],
     very: ["heckin"],
     food: ["noms"],
     like: ["liek"],
@@ -73,6 +75,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     cat: ["catto"],
     kitten: ["kitteh"],
     dead: ["ded"],
+    have: ["hav"],
+    never: ["neber"],
+    hated: ["h8d"],
+    hate: ["h8"],
     small: ["smol"],
     loves: ["ruffs"],
     believe: ["belieb"],
@@ -105,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sniff: ["smells"]
   };
 
-  let levelOfDerp = 2;
+  let levelOfDerp = 1;
 
   const inputForm = document.getElementById("inputform");
   const outputForm = document.getElementById("outputform");
