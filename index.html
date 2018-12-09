@@ -7,7 +7,9 @@
     <title>Document</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -20,8 +22,11 @@
       </div>
     </div>
     <section class="forms section">
-      <h1 class="title">Convert English to Doggo</h1>
-      <p><span id="libraryCount"></span>+ translations so far!</p>
+      <h1 class="title">DoggoSpk Translator</h1>
+      <p>
+        <span class="library-count bounce" id="libraryCount"></span>
+        translations so far!
+      </p>
       <div class="columns">
         <div class="column">
           <form id="inputForm">
@@ -118,15 +123,39 @@
           </form>
         </div>
         <div class="column">
-          <b>
+          <p>
             <span id="wordCount"></span> Words that have been searched but no
-            translation currently exists: (click to translate)</b
-          >
+            translation currently exists: (click to translate)
+          </p>
+          <br />
           <ul id="wordlist"></ul>
         </div>
       </div>
     </section>
 
+    <footer class="footer">
+      <div class="content">
+        <ul>
+          <li><strong>DoggoSpk</strong></li>
+          <li>
+            <i class="fab fa-github fa-2x"></i>
+            <a href="https://github.com/darrencarlin/DoggoSpk"
+              >Help develop the dictionary
+            </a>
+          </li>
+          <li>
+            <i class="fas fa-pencil-alt fa-2x"></i>
+            <a href="mailto:georgethecorgi2012@gmail.com"
+              >Help design the website</a
+            >
+          </li>
+          <li>
+            <i class="fab fa-instagram fa-2x"></i>
+            <a href="contributors.html">Contributors</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
     <script>
