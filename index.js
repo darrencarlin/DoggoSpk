@@ -71,11 +71,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function addData(arr) {
     arr = arr.filter(val => !noTranslationArr.includes(val));
-
     var filtered = arr.filter(el => {
       return el != null;
     });
-
     filtered.forEach(word => {
       wordsRef.add({
         word: word
@@ -89,9 +87,11 @@ document.addEventListener("DOMContentLoaded", function() {
     event.preventDefault();
     let english = document.getElementById("english").value.trim();
     let translation = document.getElementById("doggo").value.trim();
+    let handle = document.getElementById("handle").value.trim();
     let word = {
-      english: english,
-      translation: translation
+      english,
+      translation,
+      handle
     };
     if (english.length && translation.length > 0) {
       userWords.add({
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       document.getElementById("english").value = "";
       document.getElementById("doggo").value = "";
+      document.getElementById("handle").value = "";
       document.getElementById("addWord").innerText = "Thank You";
       setTimeout(() => {
         document.getElementById("addWord").innerText = "Submit";
@@ -141,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function() {
         hashtagArr.push(output);
       }
     });
-
     addData(noTranslation);
   }
 
