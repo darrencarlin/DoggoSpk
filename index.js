@@ -2,7 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
   let levelOfDerp = 0;
-
   const inputForm = document.getElementById("inputform");
   const outputForm = document.getElementById("outputform");
   const submitBtn = document.getElementById("submit");
@@ -13,34 +12,17 @@ document.addEventListener("DOMContentLoaded", function() {
   const wordCount = document.getElementById("wordCount");
 
   const libraryCount = document.getElementById("libraryCount");
-  //const libraryWordCount = Object.keys(dictionary).length;
-  //libraryCount.innerHTML = libraryWordCount;
 
   // Firebase
 
   const db = firebase.firestore();
   db.settings({ timestampsInSnapshots: true });
   const wordsRef = db.collection("noTranslation");
-
   const userWords = db.collection("userWords");
 
   let dictionaryObj = {};
-
   let userWordsArr = [];
-
-  // function testadd() {
-  //   const dictionaryRef = db.collection("dictionary");
-  //   Object.entries(dictionary).forEach(word => {
-  //     //     console.log(
-
-  //     // word[0],
-  //     //  [...word[1]]
-  //     //     )
-  //     dictionaryRef.add({ name: word[0], arr: [...word[1]] });
-  //   });
-  // }
-  // testadd();
-
+  let noTranslationArr = [];
   (function getData() {
     (async () => {
       let dictionaryRef = await db.collection("dictionary").get();
@@ -57,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let data = item.data();
         noTranslationArr.push(data.word);
       }
+
       displayWords(noTranslationArr);
       wordCount.innerHTML = noTranslationArr.length;
     })();
@@ -88,9 +71,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function addData(arr) {
     arr = arr.filter(val => !noTranslationArr.includes(val));
+
     var filtered = arr.filter(el => {
       return el != null;
     });
+
     filtered.forEach(word => {
       wordsRef.add({
         word: word
@@ -127,19 +112,22 @@ document.addEventListener("DOMContentLoaded", function() {
   // Used to store hashtags
   let hashtagArr = [];
   // Words that don't currently have a translation are stored here
-  let noTranslationArr = [];
+  let noTranslation = [];
 
   // Translate
 
   function translate(event) {
     event.preventDefault();
     let text = inputForm.value.toLowerCase().trim();
-    let array = text.split(/,?\s+/);
+    let array = removeSpecialChars(text);
+
+    //let array = text.split(/,?\s+/);
     array.forEach(word => {
       // if the word doesn't have a translation return the original word..
       if (dictionaryObj[word] === undefined) {
         outputForm.innerHTML += `${word} `;
-        noTranslationArr.push(word);
+        noTranslation.push(word);
+
         // else return the translation
       } else {
         let output = dictionaryObj[word][levelOfDerp];
@@ -153,7 +141,8 @@ document.addEventListener("DOMContentLoaded", function() {
         hashtagArr.push(output);
       }
     });
-    addData(noTranslationArr);
+
+    addData(noTranslation);
   }
 
   // Create hashtags
@@ -206,4 +195,14 @@ document.addEventListener("DOMContentLoaded", function() {
   addBtn.addEventListener("click", event => {
     addWordToDB(event);
   });
+
+  // Helper Functions
+
+  function removeSpecialChars(str) {
+    return str
+      .replace(/(?!\w|\s)./g, "")
+      .replace(/\s+/g, " ")
+      .replace(/^(\s*)([\W\w]*)(\b\s*$)/g, "$2")
+      .split(/,?\s+/);
+  }
 });
