@@ -12,7 +12,8 @@ body {
 }
 
 .word:hover {
-  background-color: #cccccc;
+  background-color: #fff;
+  color: #333;
   transition: all 0.3s ease;
 }
 
@@ -38,11 +39,13 @@ ul {
 }
 
 ul li {
-  padding: 5px 10px;
-  border: 1px solid #969696;
-  margin: 10px;
-  border-radius: 10px;
-  background-color: #fff;
+  font-size: 1.25em;
+  color: #fff;
+  background-color: #ff851b;
+  text-decoration: none;
+  padding: 0.4em;
+  border-radius: 1em;
+  margin: 0.2em;
 }
 
 .column {
@@ -116,6 +119,11 @@ li {
   h2,
   h3 {
     text-align: initial;
+  }
+
+  .section {
+    max-width: 80%;
+    margin: 0 auto;
   }
   #addForm {
     width: 100%;

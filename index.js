@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
     inputForm.value = "";
     outputForm.innerText = "";
     hashtagArr = [];
-    noTranslationArr = [];
+    // noTranslationArr = [];
   });
 
   inputForm.addEventListener("keydown", event => {
