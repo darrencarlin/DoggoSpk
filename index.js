@@ -1,117 +1,7 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-  const dictionary = {
-    what: ["wut"],
-    why: ["y"],
-    puppy: ["pupperino"],
-    fur: ["floof"],
-    help: ["halp"],
-    hello: ["herro"],
-    lick: ["mlem"],
-    fat: ["thicc"],
-    treats: ["yum yums"],
-    hungry: ["hungo"],
-    snack: ["snacc"],
-    attention: ["attenchon"],
-    stop: ["staph"],
-    that: ["dat"],
-    thats: ["dats"],
-    this: ["dis"],
-    fuck: ["furk"],
-    never: ["neber"],
-    some: ["sum"],
-    someone: ["some1"],
-    weird: ["werd"],
-    somebody: ["sumbufy"],
-    fuckery: ["furkery"],
-    brother: ["brofur"],
-    brothers: ["brofurs"],
-    laugh: ["laf"],
-    sister: ["sisfur"],
-    sisters: ["sisfurs"],
-    parent: ["pawrent"],
-    parents: ["pawrents"],
-    are: ["r"],
-    serious: ["sirius"],
-    paws: ["stumps", "toe beans"],
-    dog: ["doggo"],
-    more: ["moar"],
-    with: ["wid"],
-    please: ["peez"],
-    scratches: ["scritches"],
-    look: ["lewk"],
-    give: ["gib"],
-    teeth: ["teef"],
-    think: ["tink"],
-    you: ["u"],
-    need: ["ned"],
-    to: ["2"],
-    your: ["ur"],
-    its: ["is"],
-    me: ["ma"],
-    friend: ["fren"],
-    friends: ["frens"],
-    fret: ["fret"],
-    treats: ["noms"],
-    doing: ["doin"],
-    bark: ["bork"],
-    come: ["com"],
-    human: ["hooman"],
-    hungry: ["hungy"],
-    for: ["fur"],
-    love: ["luv","lub"],
-    very: ["heckin"],
-    food: ["noms"],
-    like: ["liek"],
-    nose: ["snoot"],
-    legs: ["nubs"],
-    have: ["hav"],
-    run: ["zoom"],
-    running: ["zoomies"],
-    bird: ["birb"],
-    crazy: ["heckin"],
-    good: ["da bes"],
-    boy: ["boye"],
-    ignoring: ["ignore"],
-    cat: ["catto"],
-    kitten: ["kitteh"],
-    dead: ["ded"],
-    have: ["hav"],
-    never: ["neber"],
-    hated: ["h8d"],
-    hate: ["h8"],
-    small: ["smol"],
-    loves: ["ruffs"],
-    believe: ["belieb"],
-    butter: ["butta"],
-    hi: ["hai"],
-    best: ["bestest"],
-    peanuts: ["nutz"],
-    cashews: ["nutz"],
-    sprint: ["zoom"],
-    fish: ["fishies"],
-    sprints: ["zoomies"],
-    sprinting: ["zoomies"],
-    mom: ["mahm"],
-    dad: ["dadfur", "popfur"],
-    walk: ["walkies"],
-    dinner: ["kibble"],
-    train: ["tren"],
-    cheese: ["chez", "cheeezz"],
-    afraid: ["fraid", "fraaaid", "fraaaaiiiddddd"],
-    excuse: ["scuse"],
-    stupid: ["stoopid"],
-    too: ["2"],
-    protect: ["protec"],
-    there: ["ther"],
-    here: ["hur"],
-    talk: ["tak"],
-    take: ["tak"],
-    breakfast: ["breakfurrst"],
-    happy: ["happi"],
-    sniff: ["smells"]
-  };
+/* global firebase */
 
-  let levelOfDerp = 1;
+document.addEventListener("DOMContentLoaded", function() {
+  let levelOfDerp = 0;
 
   const inputForm = document.getElementById("inputform");
   const outputForm = document.getElementById("outputform");
@@ -123,81 +13,89 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const wordCount = document.getElementById("wordCount");
 
   const libraryCount = document.getElementById("libraryCount");
-  const libraryWordCount = Object.keys(dictionary).length;
-  libraryCount.innerHTML = libraryWordCount;
-  let entireWordsArr = [];
+  //const libraryWordCount = Object.keys(dictionary).length;
+  //libraryCount.innerHTML = libraryWordCount;
 
   // Firebase
 
   const db = firebase.firestore();
   db.settings({ timestampsInSnapshots: true });
   const wordsRef = db.collection("noTranslation");
-  const dictionaryRef = db.collection("dictionary");
+
   const userWords = db.collection("userWords");
 
-  // Get Dictionary from Firestore
+  let dictionaryObj = {};
 
-  function getDictionary() {}
+  let userWordsArr = [];
 
-  // Get words not yet translated from Firestore
+  // function testadd() {
+  //   const dictionaryRef = db.collection("dictionary");
+  //   Object.entries(dictionary).forEach(word => {
+  //     //     console.log(
 
-  let wordsArr = [];
+  //     // word[0],
+  //     //  [...word[1]]
+  //     //     )
+  //     dictionaryRef.add({ name: word[0], arr: [...word[1]] });
+  //   });
+  // }
+  // testadd();
 
-  function getWords() {
-    wordsArr = [];
-    wordsRef.get().then(snapshot => {
-      wordCount.innerHTML = snapshot.size;
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const id = doc.id;
-        for (key in data) {
-          if (data.hasOwnProperty(key)) {
-            let value = data[key];
-            entireWordsArr.push(value);
-            wordsArr.push({
-              name: value,
-              id: id
-            });
-          }
-        }
-      });
+  (function getData() {
+    (async () => {
+      let dictionaryRef = await db.collection("dictionary").get();
+      for (let item of dictionaryRef.docs) {
+        let data = item.data();
+        dictionaryObj[data.name] = data.arr;
+      }
+      libraryCount.innerHTML = Object.keys(dictionaryObj).length;
+    })();
 
-      displayWords(wordsArr);
-    });
-  }
-  getWords();
-  console.log(wordsArr);
+    (async () => {
+      let wordsRef = await db.collection("noTranslation").get();
+      for (let item of wordsRef.docs) {
+        let data = item.data();
+        noTranslationArr.push(data.word);
+      }
+      displayWords(noTranslationArr);
+      wordCount.innerHTML = noTranslationArr.length;
+    })();
+
+    (async () => {
+      let userWordsRef = await db.collection("userWords").get();
+      for (let item of userWordsRef.docs) {
+        let data = item.data();
+        let obj = {
+          english: data.english,
+          translation: data.translation
+        };
+        userWordsArr.push(obj);
+      }
+      document.querySelector(".overlay").remove();
+    })();
+  })();
+
   // Display words not yet translated from getWords()
 
   function displayWords(arr) {
     wordList.innerHTML = "";
-    Array.from(arr).forEach(word => {
-      wordList.innerHTML += `<li class="word" id="${word.id}" >${
-        word.name
-      }</li>`;
+    arr.forEach(word => {
+      wordList.innerHTML += `<li class="word" >${word}</li>`;
     });
   }
 
   // Add words to Firebase that have no translation after being searched
 
   function addData(arr) {
-    arr = arr.filter(val => !entireWordsArr.includes(val));
+    arr = arr.filter(val => !noTranslationArr.includes(val));
     var filtered = arr.filter(el => {
       return el != null;
     });
     filtered.forEach(word => {
-      wordsRef
-        .add({
-          word: word
-        })
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        });
+      wordsRef.add({
+        word: word
+      });
     });
-    getWords();
   }
 
   // Add words to firebase that have been recommended by a user
@@ -210,23 +108,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
       english: english,
       translation: translation
     };
-    userWords
-      .add({
+    if (english.length && translation.length > 0) {
+      userWords.add({
         word
-      })
-      .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error);
       });
 
-    document.getElementById("english").value = "";
-    document.getElementById("doggo").value = "";
-    document.getElementById("addWord").innerText = "Thank You";
-    setTimeout(() => {
-      document.getElementById("addWord").innerText = "Submit";
-    }, 3000);
+      document.getElementById("english").value = "";
+      document.getElementById("doggo").value = "";
+      document.getElementById("addWord").innerText = "Thank You";
+      setTimeout(() => {
+        document.getElementById("addWord").innerText = "Submit";
+      }, 3000);
+    } else {
+      document.getElementById("english").focus();
+    }
   }
 
   // Used to store hashtags
@@ -234,23 +129,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
   // Words that don't currently have a translation are stored here
   let noTranslationArr = [];
 
-  // Convert words to doggo
+  // Translate
 
-  function convertText(event) {
+  function translate(event) {
     event.preventDefault();
     let text = inputForm.value.toLowerCase().trim();
     let array = text.split(/,?\s+/);
     array.forEach(word => {
-      // if the word doesn't have a translation return the original word, else return the translation
-      if (dictionary[word] === undefined) {
+      // if the word doesn't have a translation return the original word..
+      if (dictionaryObj[word] === undefined) {
         outputForm.innerHTML += `${word} `;
         noTranslationArr.push(word);
+        // else return the translation
       } else {
-        let output = dictionary[word][levelOfDerp];
-        if (output === undefined) {
-          output = dictionary[word][1];
-          if (output === undefined) {
-            output = dictionary[word][0];
+        let output = dictionaryObj[word][levelOfDerp];
+        if (output === "") {
+          output = dictionaryObj[word][1];
+          if (output === "") {
+            output = dictionaryObj[word][0];
           }
         }
         outputForm.innerHTML += `${output} `;
@@ -295,12 +191,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   inputForm.addEventListener("keydown", event => {
     if (event.keyCode === 13) {
-      convertText(event);
+      translate(event);
     }
   });
 
   submitBtn.addEventListener("click", event => {
-    convertText(event);
+    translate(event);
   });
 
   hashtagBtn.addEventListener("click", event => {
@@ -310,8 +206,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
   addBtn.addEventListener("click", event => {
     addWordToDB(event);
   });
-
-  /*****************************************************************************
-   *                     Admin Page                                            *
-   * ***************************************************************************/
 });

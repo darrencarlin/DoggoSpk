@@ -1,111 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
+    <div class="overlay">
+      <div class="spinner">
+        <img src="image.png" alt="" class="image" />
+        <p>Loading...</p>
+      </div>
+    </div>
     <section class="forms section">
-        <h1 class="title">Convert English to Doggo</h1>
-        <p><span id="libraryCount"></span>+ words so far</p>
-        <div class="columns">
-            <div class="column">
-                <form id="inputForm">
-                    <h3 class="subtitle">English: </h3>
-                    <div class="field">
-                        <textarea name="textarea" id="inputform" class="textarea" placeholder="e.g. Give me attention human please"
-                            required></textarea>
-                    </div>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button" id="submit">Translate!</button>
-                        </div>
-                        <div class="control">
-                            <button class="button" id="clear">Clear</button>
-                        </div>
-                    </div>
-                </form>
+      <h1 class="title">Convert English to Doggo</h1>
+      <p><span id="libraryCount"></span>+ words so far</p>
+      <div class="columns">
+        <div class="column">
+          <form id="inputForm">
+            <h3 class="subtitle">English:</h3>
+            <div class="field">
+              <textarea
+                name="textarea"
+                id="inputform"
+                class="textarea"
+                placeholder="e.g. Give me attention human please"
+                required
+              ></textarea>
             </div>
-            <div class="column level">
-                <h3 class="subtitle">Doggo:</h3>
-                <form id="outputForm">
-                    <div class="field">
-                        <textarea name="textarea" id="outputform" class="textarea" required></textarea>
-                    </div>
-                    <div class="field">
-                        <div class="control level-right">
-                            <button class="button" id="convertToHash">Convert to #</button>
-                        </div>
-                    </div>
-
-                </form>
+            <div class="field is-grouped">
+              <div class="control">
+                <button class="button" id="submit">Translate!</button>
+              </div>
+              <div class="control">
+                <button class="button" id="clear">Clear</button>
+              </div>
             </div>
+          </form>
         </div>
+        <div class="column level">
+          <h3 class="subtitle">Doggo:</h3>
+          <form id="outputForm">
+            <div class="field">
+              <textarea
+                name="textarea"
+                id="outputform"
+                class="textarea"
+                required
+              ></textarea>
+            </div>
+            <div class="field">
+              <div class="control level-right">
+                <button class="button" id="convertToHash">Convert to #</button>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </section>
     <section class="section">
-        <h2 class="title">Help build the library</h2>
-        <div class="columns">
-            <div class="column">
-                <form id="addForm">
-                    <div class="field">
-                        <h3 class="subtitle">English:</h3>
-                        <input type="text" class="input" id="english" name="english" value="" placeholder="You word in English:"
-                            required />
-                    </div>
-                    <div class="field ">
-                        <h3 class="subtitle">Doggo:</h3>
-                        <input type="text" class="input" id="doggo" name="translation" value="" placeholder="Your doggo translation:"
-                            required />
-                    </div>
-                    <div class="field">
-                        <div class="field-label">
-                            <!-- Left empty for spacing -->
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    <button class="button" id="addWord">
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
+      <h2 class="title">Help build the library</h2>
+      <div class="columns">
+        <div class="column">
+          <form id="addForm">
+            <div class="field">
+              <h3 class="subtitle">English:</h3>
+              <input
+                type="text"
+                class="input"
+                id="english"
+                name="english"
+                value=""
+                placeholder="You word in English:"
+                required
+              />
             </div>
-            <div class="column">
-                <b> <span id="wordCount"></span> Words that have been searched but no translation currently exists:
-                    (click to
-                    translate)</b>
-                <ul id="wordlist"></ul>
+            <div class="field ">
+              <h3 class="subtitle">Doggo:</h3>
+              <input
+                type="text"
+                class="input"
+                id="doggo"
+                name="translation"
+                value=""
+                placeholder="Your doggo translation:"
+                required
+              />
             </div>
+            <div class="field">
+              <div class="field-label"><!-- Left empty for spacing --></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button class="button" id="addWord">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-
+        <div class="column">
+          <b>
+            <span id="wordCount"></span> Words that have been searched but no
+            translation currently exists: (click to translate)</b
+          >
+          <ul id="wordlist"></ul>
+        </div>
+      </div>
     </section>
 
-    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
     <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDMJ7zAUEiH6RfrIMonQ42aZofGEWeTumQ",
-            authDomain: "doggoskp.firebaseapp.com",
-            databaseURL: "https://doggoskp.firebaseio.com",
-            projectId: "doggoskp",
-            storageBucket: "doggoskp.appspot.com",
-            messagingSenderId: "694605725223"
-        };
-        firebase.initializeApp(config);
+      // Initialize Firebase
+
+      var config = {
+        apiKey: "AIzaSyDMJ7zAUEiH6RfrIMonQ42aZofGEWeTumQ",
+        authDomain: "doggoskp.firebaseapp.com",
+        databaseURL: "https://doggoskp.firebaseio.com",
+        projectId: "doggoskp",
+        storageBucket: "doggoskp.appspot.com",
+        messagingSenderId: "694605725223"
+      };
+      firebase.initializeApp(config);
     </script>
     <script src="index.js"></script>
-</body>
-
+  </body>
 </html>
