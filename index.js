@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       displayWords(noTranslationArr);
-      wordCount.innerHTML = noTranslationArr.length;
     })();
 
     (async () => {
@@ -64,11 +63,12 @@ document.addEventListener("DOMContentLoaded", function() {
     wordList.innerHTML = "";
 
     let uniqueWords = arr.filter((elem, index, self) => {
-      index == self.indexOf(elem);
+      return index == self.indexOf(elem);
     });
     uniqueWords.forEach(word => {
       wordList.innerHTML += `<li class="word" >${word}</li>`;
     });
+    wordCount.innerHTML = uniqueWords.length;
   }
 
   // Add words to Firebase that have no translation after being searched
