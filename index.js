@@ -62,7 +62,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function displayWords(arr) {
     wordList.innerHTML = "";
-    arr.forEach(word => {
+
+    let uniqueWords = arr.filter((elem, index, self) => {
+      index == self.indexOf(elem);
+    });
+    uniqueWords.forEach(word => {
       wordList.innerHTML += `<li class="word" >${word}</li>`;
     });
   }
